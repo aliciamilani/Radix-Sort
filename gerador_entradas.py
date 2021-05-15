@@ -1,6 +1,12 @@
 from random import randint
 
-lista_aleatorios = [0]*100000
+
+def salvar_txt(nome_do_arquivo, lista):
+    arquivo_escrita = open(nome_do_arquivo, "x")
+    arquivo_escrita.writelines(lista)
+
+
+lista_aleatorios = [0] * 100000
 lista_crescente = [str(i) + "\n" for i in range(100000)]
 lista_decrescente = [str(i) + "\n" for i in range(100000, 0, -1)]
 
@@ -15,17 +21,8 @@ for pos in range(len(lista_aleatorios)):
     lista_aleatorios[pos] = str(randint(1, 99999)) + "\n"
 
 
-arquivo_escrita = open("entrada_aleatoria.txt", "x")
-arquivo_escrita.writelines(lista_aleatorios)
-
-arquivo_escrita = open("entrada_crescente.txt", "x")
-arquivo_escrita.writelines(lista_crescente)
-
-arquivo_escrita = open("entrada_decrescente.txt", "x")
-arquivo_escrita.writelines(lista_decrescente)
-
-arquivo_escrita = open("entrada_crescente_decrescente.txt", "x")
-arquivo_escrita.writelines(lista_crescente_decrescente)
-
-arquivo_escrita = open("entrada_decrescente_crescente.txt", "x")
-arquivo_escrita.writelines(lista_decrescente_crescente)
+salvar_txt("entrada_aleatoria.txt", lista_aleatorios)
+salvar_txt("entrada_crescente.txt", lista_crescente)
+salvar_txt("entrada_decrescente.txt", lista_decrescente)
+salvar_txt("entrada_crescente_decrescente.txt", lista_crescente_decrescente)
+salvar_txt("entrada_decrescente_crescente.txt", lista_decrescente_crescente)
