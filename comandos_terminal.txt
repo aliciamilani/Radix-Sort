@@ -1,0 +1,5 @@
+g++ radix_sort.cpp && ./a.out < entrada_aleatoria.txt
+g++ radix_sort.cpp && ./a.out < entrada_crescente.txt
+g++ radix_sort.cpp && ./a.out < entrada_decrescente.txt
+g++ radix_sort.cpp && ./a.out < entrada_crescente_decrescente.txt
+g++ radix_sort.cpp && ./a.out < entrada_decrescente_crescente.txt

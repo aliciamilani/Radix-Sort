@@ -12,23 +12,34 @@ int digito(int num, int casa_decimal, int base){ //Extracao de digitos
     return 0;
 }
 
-void radix(int *v, int n, int base, int num_digitos) { //vetor, quantidade de numeros, base decimal, digitos dos numeros
+// v = Vetor a ser ordenado, n = tamanho do vetor, base = base dos caracteres no vetor
+//num_digitos = Numero maximo de digitos em um elemento
+void radix_sort(int *v, int n, int base, int num_digitos) {
+    //iniciando variaveis auxiliares
     int i, j, w, count[base+1], d, posicao;
     int *aux = (int *) malloc(n * sizeof(int));
-    for(w = 0; w < num_digitos; w++) { //percorrendo os digitos para ordenar
-        for(j = 0; j < base; j++) count[j] = 0; //contador de numeros baseado em seus digitos
-        for(i = 0; i < n; i++) { //percorrendo vetor e extraindo o digito dos elementos
-            d = digito(v[i], w, base); //extraindo o digito que esta sendo analisado
-            count[d+1]++; //contando quantos numeros vao estar em casa posicao
+    //percorrendo os digitos para realizar a ordenacao
+    for(w = 0; w < num_digitos; w++) {
+        //zerando o vetor que contara a quantidade de numeros por digito
+        for(j = 0; j < base; j++) count[j] = 0;
+        //percorrendo o vetor e contando a quantidade de numeros por digito
+        for(i = 0; i < n; i++) {
+            d = digito(v[i], w, base);
+            count[d+1]++;
         }
-        for(j = 1; j < base; j++) count[j] += count[j-1]; //Pegando a posicao de inicio de cada digito
-        for(i = 0; i < n; i++) { //Percorrendo vetor para ordenar
-            d = digito(v[i], w, base); //Digito para definir a posicao no vetor
-            posicao = count[d]; //pegando a posicao de insercao no vetor
-            count[d] += 1; //nova posicao de insercao de determinado digito
-            aux[posicao] = v[i]; //adicionando o elemento na nova posicao
+        //definindo a posicao inicial no vetor de cada digito
+        for(j = 1; j < base; j++) count[j] += count[j-1];
+        //percorrendo o vetor para realizar a ordenazao
+        for(i = 0; i < n; i++) {
+            d = digito(v[i], w, base);
+            //Extraindo a nova posicao do numero de acordo com seu digito que esta sendo analisado
+            posicao = count[d];
+            //ao adicionar um numero o digitico em questao passara a ter uma nova posicao vaga
+            count[d] += 1;
+            aux[posicao] = v[i];
             }
-            for(i = 0; i < n; i++) v[i] = aux[i]; //vetor recebe a nova organizacao
+            //vetor recebe a sua nova organizacao
+            for(i = 0; i < n; i++) v[i] = aux[i];
     }
 }
 
@@ -41,11 +52,15 @@ int main(){
         cin >> vetor[i];
 
     }
-    radix(vetor, TAM, 10, 5);
+    auto start = chrono::high_resolution_clock::now();
+    radix_sort(vetor, TAM, 10, 5);
+    auto end = chrono::high_resolution_clock::now();
+    auto int_s = chrono::duration_cast<chrono::milliseconds>(end - start);
+    cout << "O tempo para ordenacao foi de: " << int_s.count() << " milisegundos" << endl;
 
-   for(int i = 0; i < TAM; i++){
-       cout << vetor[i] << "\n";
-   }
+//    for(int i = 0; i < TAM; i++){
+//        cout << vetor[i] << "\n";
+//    }
 
     return 0;
 }
